@@ -53,7 +53,8 @@ authenticate () {
 }
 
 download_starter_file () {
-  curl --url $base_url | grep . >> $1
+  # curl --url $base_url | grep '_2017m' >> $1
+  curl --url $base_url | grep ${FILE_PATTERN} >> $1
 }
 
 run () {
@@ -74,4 +75,41 @@ run () {
   $curl_with_auth -K $file_o_links
 }
 
-run "$@"
+make_file_pattern_from_date () {
+  echo _${1:0:4}m${1:4:4}
+}
+
+parse_args () {
+# http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash#answer-14203146
+USERNAME=""
+PASSWORD=""
+FILE_PATTERN='.'
+
+while [[ $# -gt 1 ]]
+do
+key="$1"
+
+
+case $key in
+    -u|--username)
+    USERNAME="$2"
+    shift # past argument
+    ;;
+    -p|--password)
+    PASSWORD="$2"
+    shift # past argument
+    ;;
+    -d|--date)
+    FILE_PATTERN=$(make_file_pattern_from_date $2)
+    shift # past argument
+    ;;
+    *)
+            # unknown option
+    ;;
+esac
+shift # past argument or value
+done
+}
+
+parse_args "$@"
+run $USERNAME $PASSWORD

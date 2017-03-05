@@ -17,6 +17,12 @@ Data is stored in ~9005 `.he5` (`hdf`) files that are approximately `130MB` in s
 1. Then run the script:
 
   ```bash
-  ./nasa-uv-data-downloader/script.sh <username> <password>
+  ./nasa-uv-data-downloader/script.sh -u <username> -p <password>
   ```
   where `<username>` and `<password>` are from Step 1, the Earthdata login.
+
+  You can also add a `-d` option for date.  `-d` can be any of the following:
+  `2017`
+  `201702`
+  `20170201`
+  or any other date string in the `YYYY`, `YYYYMM`, or `YYYYMMDD` format.
