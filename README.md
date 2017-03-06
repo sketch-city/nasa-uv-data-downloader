@@ -2,7 +2,7 @@ A way to download [Level-2 OMI Surface UV Irradiance and Erythemal Dose](https:/
 
 # About the data
 
-Data is stored in ~9005 `.he5` (`hdf`) files that are approximately `130MB` in size per file, the total of which right now is at least 1TB of data.
+Data is stored in ~9005 files, some are `.he5` (`hdf`) data files and others are matching `.xml` metadata files.
 
 # Steps
 
@@ -26,3 +26,5 @@ Data is stored in ~9005 `.he5` (`hdf`) files that are approximately `130MB` in s
   `201702`
   `20170201`
   or any other date string in the `YYYY`, `YYYYMM`, or `YYYYMMDD` format.
+
+  By default, both `.he5` data and the corresponding `.xml` data will be downloaded.  You can add a `--without-meta` flag or `--without-data` flag to the command as needed.

@@ -53,7 +53,6 @@ authenticate () {
 }
 
 download_starter_file () {
-  # curl --url $base_url | grep '_2017m' >> $1
   curl --url $base_url | grep ${FILE_PATTERN} >> $1
 }
 
@@ -64,51 +63,82 @@ run () {
   # things for authenthication
   add_to_netrc $1 $2
   make_cookies_file
-
   echo "make cookies_file"
+
   download_starter_file $starter_file
   echo "starter file downloaded"
   make_curling_file $starter_file $file_o_links
   echo "file o' links written"
-  authenticate $(make_https $(head -n 1 $starter_file))
+
+  if [ ! -s $cookies_file ] ; then
+    authenticate $(make_https $(head -n 1 $starter_file))
+  fi
 
   $curl_with_auth -K $file_o_links
 }
 
 make_file_pattern_from_date () {
-  echo _${1:0:4}m${1:4:4}
+  if [ ${#1} -lt 4 ] ; then
+    echo ".*_${1}"
+  else
+    echo ".*_${1:0:4}m${1:4:4}"
+  fi
+}
+
+amend_file_pattern_for_type () {
+  if ($WITH_META && $WITH_DATA) ; then
+    echo $1
+  elif $WITH_META ; then
+    echo "${1}.*xml$"
+  elif $WITH_DATA ; then
+    echo "${1}.*he5$"
+  fi
 }
 
 parse_args () {
-# http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash#answer-14203146
-USERNAME=""
-PASSWORD=""
-FILE_PATTERN='.'
+  # http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash#answer-14203146
+  USERNAME=""
+  PASSWORD=""
+  FILE_PATTERN='.'
+  WITH_META=true
+  WITH_DATA=true
 
-while [[ $# -gt 1 ]]
-do
-key="$1"
+  while [[ $# -ge 1 ]] ; do
+    key="$1"
 
+    case $key in
+      -u|--username)
+      USERNAME="$2"
+      shift # past argument
+      ;;
+      -p|--password)
+      PASSWORD="$2"
+      shift # past argument
+      ;;
+      -d|--date)
+      FILE_PATTERN=$(make_file_pattern_from_date $2)
+      shift # past argument
+      ;;
+      --with-meta)
+      WITH_META=true
+      ;;
+      --with-data)
+      WITH_DATA=true
+      ;;
+      --without-meta)
+      WITH_META=false
+      ;;
+      --without-data)
+      WITH_DATA=false
+      ;;
+      *)
+      # unknown option
+      ;;
+    esac
+    shift # past argument or value
+  done
 
-case $key in
-    -u|--username)
-    USERNAME="$2"
-    shift # past argument
-    ;;
-    -p|--password)
-    PASSWORD="$2"
-    shift # past argument
-    ;;
-    -d|--date)
-    FILE_PATTERN=$(make_file_pattern_from_date $2)
-    shift # past argument
-    ;;
-    *)
-            # unknown option
-    ;;
-esac
-shift # past argument or value
-done
+  FILE_PATTERN=$(amend_file_pattern_for_type $FILE_PATTERN)
 }
 
 parse_args "$@"
