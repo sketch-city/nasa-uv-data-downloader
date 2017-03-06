@@ -45,9 +45,17 @@ File Size(Approx): 130 MB
 
 # More Info
 
+## About
+
 * https://mirador.gsfc.nasa.gov/cgi-bin/mirador/collectionlist.pl?keyword=omuvbg
 * https://disc.gsfc.nasa.gov/uui/datasets/OMUVBG_V003/summary
 * https://acdisc.gesdisc.eosdis.nasa.gov/opendap/HDF-EOS5/Aura_OMI_Level2G/OMUVBG.003/contents.html
 * https://mirador.gsfc.nasa.gov/cgi-bin/mirador/granlist.pl?page=1&dataSet=OMUVBG&version=003&allversion=003&keyword=omuvbg&pointLocation=(-90,-180),(90,180)&location=(-90,-180),(90,180)&searchType=Location&event=&startTime=2004-10-01&endTime=2017-03-04%2023:59:59&search=&CGISESSID=a6a5b3aeb7fd6ba229f02f71d56dfaa1&nr=4502&temporalres=1%20day&prodpg=http://disc.gsfc.nasa.gov/datacollection/OMUVBG_V003.html&longname=OMI/Aura%20Surface%20UVB%20Irradiance%20and%20Erythemal%20Dose%20Daily%20L2%20Global%20Gridded%200.25%20degree%20x%200.25%20degree%20V3&granulePresentation=ungrouped
 
 ![](./data-calendar.png)
+
+## Papers?
+
+* [Surface ultraviolet irradiance from OMI](http://ieeexplore.ieee.org/document/1624605/)
+* [Solar Erythemal Daily Dose Distributions Maps over Peninsular Malaysia Obtained By Ozone Monitoring Instrument](http://www.ipcbee.com/vol8/50-S20008.pdf)
+* [Validation of daily erythemal doses from Ozone Monitoring Instrument with ground-based UV measurement data](http://onlinelibrary.wiley.com/doi/10.1029/2007JD008830/full)
